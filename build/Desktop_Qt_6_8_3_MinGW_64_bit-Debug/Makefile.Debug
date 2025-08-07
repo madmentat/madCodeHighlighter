@@ -19,7 +19,7 @@ CXXFLAGS      = -fno-keep-inline-dllexport -g -std=gnu++1z -Wall -Wextra -Wextra
 INCPATH       = -I../../../madCodeHighlighter -I. -IC:/kde/kf6/include/kf6/KSyntaxHighlighting -IF:/Qt/6.8.3/mingw_64/include -IF:/Qt/6.8.3/mingw_64/include/QtWidgets -IF:/Qt/6.8.3/mingw_64/include/QtGui -IF:/Qt/6.8.3/mingw_64/include/QtCore -Idebug -I. -I/include -IF:/Qt/6.8.3/mingw_64/mkspecs/win32-g++ 
 LINKER      =        g++
 LFLAGS        =        -Wl,-subsystem,windows -mthreads
-LIBS        =        -LC:\kde\kf6\lib -lKF6SyntaxHighlighting F:\Qt\6.8.3\mingw_64\lib\libQt6Widgets.a F:\Qt\6.8.3\mingw_64\lib\libQt6Gui.a F:\Qt\6.8.3\mingw_64\lib\libQt6Core.a debug\icon_res.o -lmingw32 F:\Qt\6.8.3\mingw_64\lib\libQt6EntryPoint.a -lshell32  
+LIBS        =        -ldwmapi -LC:\kde\kf6\lib -lKF6SyntaxHighlighting F:\Qt\6.8.3\mingw_64\lib\libQt6Widgets.a F:\Qt\6.8.3\mingw_64\lib\libQt6Gui.a F:\Qt\6.8.3\mingw_64\lib\libQt6Core.a debug\icon_res.o -lmingw32 F:\Qt\6.8.3\mingw_64\lib\libQt6EntryPoint.a -lshell32  
 QMAKE         = F:\Qt\6.8.3\mingw_64\bin\qmake.exe
 DEL_FILE      = del
 CHK_DIR_EXISTS= if not exist
@@ -1608,7 +1608,15 @@ debug/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		F:/Qt/6.8.3/mingw_64/include/QtCore/qfile.h \
 		F:/Qt/6.8.3/mingw_64/include/QtCore/qfiledevice.h \
 		F:/Qt/6.8.3/mingw_64/include/QtCore/QSettings \
-		F:/Qt/6.8.3/mingw_64/include/QtCore/qsettings.h
+		F:/Qt/6.8.3/mingw_64/include/QtCore/qsettings.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/QApplication \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qapplication.h \
+		F:/Qt/6.8.3/mingw_64/include/QtGui/QWindow \
+		F:/Qt/6.8.3/mingw_64/include/QtGui/qwindow.h \
+		F:/Qt/6.8.3/mingw_64/include/QtCore/QEvent \
+		F:/Qt/6.8.3/mingw_64/include/QtCore/QMargins \
+		F:/Qt/6.8.3/mingw_64/include/QtGui/qsurface.h \
+		F:/Qt/6.8.3/mingw_64/include/QtGui/qsurfaceformat.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\mainwindow.o ..\..\mainwindow.cpp
 
 debug/settings.o: ../../settings.cpp ../../settings.h \

@@ -31,6 +31,8 @@ TRANSLATIONS += \
 CONFIG += lrelease
 CONFIG += embed_translations
 
+win32: LIBS += -ldwmapi
+
 # Пути к KF6
 INCLUDEPATH += C:/kde/kf6/include/kf6/KSyntaxHighlighting
 LIBS += -LC:/kde/kf6/lib -lKF6SyntaxHighlighting

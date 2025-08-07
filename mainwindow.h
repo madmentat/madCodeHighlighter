@@ -7,6 +7,11 @@
 #include <KSyntaxHighlighting/Definition>
 #include <KSyntaxHighlighting/Theme>
 
+#ifdef Q_OS_WIN
+#include <windows.h>
+#include <dwmapi.h>
+#endif
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -34,7 +39,7 @@ private slots:
     void on_settingsButton_clicked();
     void on_settings_triggered();
     void on_copyButton_clicked();
-    void toggleTheme(); // New slot to toggle theme
+    void toggleTheme(); // Renamed to avoid connectSlotsByName conflict
 
 private:
     Ui::MainWindow *ui;
@@ -44,13 +49,14 @@ private:
     KSyntaxHighlighting::Theme theme;
     About* m_about;
     Settings* m_settings;
-    bool isDarkTheme; // Boolean to track theme state
+    bool isDarkTheme;
 
     void saveSettings();
     void loadSettings();
     void about();
     void settings();
-    void applyTheme(); // Apply theme based on isDarkTheme
+    void applyTheme();
+    void updateTitleBarTheme();
 };
 
 #endif // MAINWINDOW_H
