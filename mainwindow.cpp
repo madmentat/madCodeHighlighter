@@ -6,10 +6,12 @@
 #include <QDebug>
 #include <QFile>
 #include <QSettings>
+#include <QApplication>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , isDarkTheme(true) // Default to light theme
 {
     qDebug() << "Создание UI...";
     ui->setupUi(this);
@@ -59,12 +61,16 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->comboBoxTheme, &QComboBox::currentTextChanged, this, &MainWindow::on_comboBoxTheme_currentTextChanged);
     connect(ui->comboBoxLanguage, &QComboBox::currentTextChanged, this, &MainWindow::on_comboBoxLanguage_currentTextChanged);
     connect(ui->saveSettingsButton, &QPushButton::clicked, this, &MainWindow::on_saveSettingsButton_clicked);
-    connect(ui->AboutCHL, &QAction::triggered, this, &MainWindow::on_AboutCHL_triggered);  // <- вот оно!
+    connect(ui->AboutCHL, &QAction::triggered, this, &MainWindow::on_AboutCHL_triggered);
 
     loadSettings();
+    applyTheme(); // Apply theme after loading settings
 
     qDebug() << "Вызов onCodeChanged()...";
     onCodeChanged();
+
+    // Temporary: Toggle theme to test functionality (remove later)
+    toggleTheme();
 
     qDebug() << "MainWindow конструктор завершён.";
 }
@@ -73,6 +79,7 @@ MainWindow::~MainWindow()
 {
     delete highlighter;
     delete m_about;
+    delete m_settings;
     delete repo;
     delete ui;
 }
@@ -149,6 +156,7 @@ void MainWindow::saveSettings()
     settings.setValue("lineSpacing", ui->comboBoxLineSpacing->currentText());
     settings.setValue("theme", ui->comboBoxTheme->currentText());
     settings.setValue("language", ui->comboBoxLanguage->currentText());
+    settings.setValue("isDarkTheme", isDarkTheme); // Save theme preference
 
     qDebug() << "Настройки сохранены.";
 }
@@ -161,26 +169,27 @@ void MainWindow::loadSettings()
     ui->comboBoxLineSpacing->setCurrentText(settings.value("lineSpacing", "1.4").toString());
     ui->comboBoxTheme->setCurrentText(settings.value("theme", "Breeze Light").toString());
     ui->comboBoxLanguage->setCurrentText(settings.value("language", "C++").toString());
+    isDarkTheme = settings.value("isDarkTheme", false).toBool(); // Load theme preference
 }
 
 void MainWindow::about()
 {
     if (!m_about)
-        m_about = new About(this);  // создаём один раз
+        m_about = new About(this);
 
-    m_about->show();         // показываем окно
-    m_about->raise();        // поднимаем наверх
-    m_about->activateWindow(); // фокусируем
+    m_about->show();
+    m_about->raise();
+    m_about->activateWindow();
 }
 
 void MainWindow::settings()
 {
     if (!m_settings)
-        m_settings = new Settings(this);  // создаём один раз
+        m_settings = new Settings(this);
 
-    m_settings->show();         // показываем окно
-    m_settings->raise();        // поднимаем наверх
-    m_settings->activateWindow(); // фокусируем
+    m_settings->show();
+    m_settings->raise();
+    m_settings->activateWindow();
 }
 
 void MainWindow::on_AboutCHL_triggered()
@@ -193,21 +202,81 @@ void MainWindow::on_aboutButton_clicked()
     about();
 }
 
-
 void MainWindow::on_settingsButton_clicked()
 {
     settings();
 }
-
 
 void MainWindow::on_settings_triggered()
 {
     settings();
 }
 
-
 void MainWindow::on_copyButton_clicked()
 {
-
+    // Placeholder for copy functionality
 }
 
+void MainWindow::toggleTheme()
+{
+    isDarkTheme = !isDarkTheme; // Toggle theme
+    applyTheme(); // Apply new theme
+    saveSettings(); // Save new theme preference
+}
+
+void MainWindow::applyTheme()
+{
+    QString lightTheme = R"(
+        QWidget {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        QTextEdit {
+            background-color: #f5f5f5;
+            color: #000000;
+            border: 1px solid #d3d3d3;
+        }
+        QPushButton {
+            background-color: #e0e0e0;
+            color: #000000;
+            border: 1px solid #a0a0a0;
+            padding: 5px;
+        }
+        QPushButton:hover {
+            background-color: #d0d0d0;
+        }
+        QComboBox {
+            background-color: #f5f5f5;
+            color: #000000;
+            border: 1px solid #d3d3d3;
+        }
+    )";
+
+    QString darkTheme = R"(
+        QWidget {
+            background-color: #2b2b2b;
+            color: #ffffff;
+        }
+        QTextEdit {
+            background-color: #1e1e1e;
+            color: #ffffff;
+            border: 1px solid #555555;
+        }
+        QPushButton {
+            background-color: #555555;
+            color: #ffffff;
+            border: 1px solid #777777;
+            padding: 5px;
+        }
+        QPushButton:hover {
+            background-color: #666666;
+        }
+        QComboBox {
+            background-color: #1e1e1e;
+            color: #ffffff;
+            border: 1px solid #555555;
+        }
+    )";
+
+    qApp->setStyleSheet(isDarkTheme ? darkTheme : lightTheme);
+}

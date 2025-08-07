@@ -29,13 +29,12 @@ private slots:
     void on_comboBoxLineSpacing_currentTextChanged(const QString &arg1);
     void on_saveSettingsButton_clicked();
     void on_comboBoxLanguage_currentTextChanged(const QString &arg1);
-    void on_AboutCHL_triggered();  // <- подключено меню
-    void on_aboutButton_clicked();    
+    void on_AboutCHL_triggered();
+    void on_aboutButton_clicked();
     void on_settingsButton_clicked();
-
     void on_settings_triggered();
-
     void on_copyButton_clicked();
+    void toggleTheme(); // New slot to toggle theme
 
 private:
     Ui::MainWindow *ui;
@@ -45,12 +44,13 @@ private:
     KSyntaxHighlighting::Theme theme;
     About* m_about;
     Settings* m_settings;
+    bool isDarkTheme; // Boolean to track theme state
 
     void saveSettings();
     void loadSettings();
-    void about();  // <- добавлено определение
-    void settings();  // <- добавлено определение
-
+    void about();
+    void settings();
+    void applyTheme(); // Apply theme based on isDarkTheme
 };
 
 #endif // MAINWINDOW_H
