@@ -1,0 +1,10 @@
+release/about.o
+release/htmlhighlighter.o
+release/main.o
+release/mainwindow.o
+release/settings.o
+release/qrc_res.o
+release/qrc_qmake_qmake_qm_files.o
+release/moc_about.o
+release/moc_mainwindow.o
+release/moc_settings.o
