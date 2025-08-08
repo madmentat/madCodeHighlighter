@@ -26,6 +26,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    bool isDarkTheme;
 
 private slots:
     void onCodeChanged();
@@ -39,7 +40,18 @@ private slots:
     void on_settingsButton_clicked();
     void on_settings_triggered();
     void on_copyButton_clicked();
-    void toggleTheme(); // Renamed to avoid connectSlotsByName conflict
+
+    void on_themeBar_toggled(bool);
+
+    void on_saveSettings_triggered();
+
+public slots:
+    void saveSettings();
+    void toggleTheme();
+    void setDarkTheme(bool dark);
+    void setAutosaveEnabled(bool en); // слот для сигнала из Settings
+
+
 
 private:
     Ui::MainWindow *ui;
@@ -49,14 +61,15 @@ private:
     KSyntaxHighlighting::Theme theme;
     About* m_about;
     Settings* m_settings;
-    bool isDarkTheme;
 
-    void saveSettings();
     void loadSettings();
     void about();
     void settings();
     void applyTheme();
     void updateTitleBarTheme();
+
+    bool m_autoSave = false;
+    void maybeSave(); // вызывать в конце слотов с изменениями
 };
 
 #endif // MAINWINDOW_H

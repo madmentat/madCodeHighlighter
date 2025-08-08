@@ -29,7 +29,8 @@ class Ui_MainWindow
 public:
     QAction *settings;
     QAction *AboutCHL;
-    QAction *action_5;
+    QAction *saveSettings;
+    QAction *themeBar;
     QWidget *centralwidget;
     QTextEdit *codeInput;
     QTextEdit *codeViewer;
@@ -60,8 +61,10 @@ public:
         settings->setObjectName("settings");
         AboutCHL = new QAction(MainWindow);
         AboutCHL->setObjectName("AboutCHL");
-        action_5 = new QAction(MainWindow);
-        action_5->setObjectName("action_5");
+        saveSettings = new QAction(MainWindow);
+        saveSettings->setObjectName("saveSettings");
+        themeBar = new QAction(MainWindow);
+        themeBar->setObjectName("themeBar");
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         codeInput = new QTextEdit(centralwidget);
@@ -109,7 +112,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 1542, 21));
+        menubar->setGeometry(QRect(0, 0, 1542, 26));
         menu = new QMenu(menubar);
         menu->setObjectName("menu");
         menu_2 = new QMenu(menubar);
@@ -125,8 +128,9 @@ public:
         menubar->addAction(menu_2->menuAction());
         menubar->addAction(menu_3->menuAction());
         menu->addSeparator();
-        menu->addAction(action_5);
+        menu->addAction(saveSettings);
         menu_2->addAction(settings);
+        menu_2->addAction(themeBar);
         menu_3->addAction(AboutCHL);
 
         retranslateUi(MainWindow);
@@ -139,7 +143,8 @@ public:
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "madCodeHighlighter v1.0", nullptr));
         settings->setText(QCoreApplication::translate("MainWindow", "\320\235\320\260\321\201\321\202\321\200\320\276\320\271\320\272\320\270", nullptr));
         AboutCHL->setText(QCoreApplication::translate("MainWindow", "\320\236 \320\277\321\200\320\276\320\263\321\200\320\260\320\274\320\274\320\265", nullptr));
-        action_5->setText(QCoreApplication::translate("MainWindow", "\320\241\320\276\321\205\321\200\320\260\320\275\320\270\321\202\321\214 \320\275\320\260\321\201\321\202\321\200\320\276\320\271\320\272\320\270", nullptr));
+        saveSettings->setText(QCoreApplication::translate("MainWindow", "\320\241\320\276\321\205\321\200\320\260\320\275\320\270\321\202\321\214 \320\275\320\260\321\201\321\202\321\200\320\276\320\271\320\272\320\270", nullptr));
+        themeBar->setText(QCoreApplication::translate("MainWindow", "\320\242\320\265\320\274\320\275\320\260\321\217 \321\202\320\265\320\274\320\260", nullptr));
         saveSettingsButton->setText(QCoreApplication::translate("MainWindow", "\320\241\320\276\321\205\321\200\320\260\320\275\320\270\321\202\321\214 \320\275\320\260\321\201\321\202\321\200\320\276\320\271\320\272\320\270", nullptr));
         aboutButton->setText(QCoreApplication::translate("MainWindow", "\320\236 \320\277\321\200\320\276\320\263\321\200\320\260\320\274\320\274\320\265", nullptr));
         settingsButton->setText(QCoreApplication::translate("MainWindow", "\320\235\320\260\321\201\321\202\321\200\320\276\320\271\320\272\320\270", nullptr));

@@ -992,6 +992,26 @@ release/about.o: ../../about.cpp ../../about.h \
 		F:/Qt/6.8.3/mingw_64/include/QtCore/qlocale.h \
 		F:/Qt/6.8.3/mingw_64/include/QtGui/qguiapplication_platform.h \
 		ui_about.h \
+		F:/Qt/6.8.3/mingw_64/include/QtCore/QVariant \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/QApplication \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qapplication.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/QGraphicsView \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qgraphicsview.h \
+		F:/Qt/6.8.3/mingw_64/include/QtGui/qpainter.h \
+		F:/Qt/6.8.3/mingw_64/include/QtGui/qtextoption.h \
+		F:/Qt/6.8.3/mingw_64/include/QtGui/qpen.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qscrollarea.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qabstractscrollarea.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qframe.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qgraphicsscene.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/QPushButton \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qpushbutton.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qabstractbutton.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/QTextEdit \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qtextedit.h \
+		F:/Qt/6.8.3/mingw_64/include/QtGui/qtextdocument.h \
+		F:/Qt/6.8.3/mingw_64/include/QtGui/qtextcursor.h \
+		F:/Qt/6.8.3/mingw_64/include/QtGui/qtextformat.h \
 		F:/Qt/6.8.3/mingw_64/include/QtWidgets/QGraphicsPixmapItem \
 		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qgraphicsitem.h \
 		F:/Qt/6.8.3/mingw_64/include/QtGui/qpainterpath.h
@@ -1597,6 +1617,40 @@ release/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		F:/Qt/6.8.3/mingw_64/include/QtCore/QExplicitlySharedDataPointer \
 		F:/Qt/6.8.3/mingw_64/include/QtCore/QTypeInfo \
 		ui_mainwindow.h \
+		F:/Qt/6.8.3/mingw_64/include/QtCore/QVariant \
+		F:/Qt/6.8.3/mingw_64/include/QtGui/QAction \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/QApplication \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qapplication.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/QComboBox \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qcombobox.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qstyleoption.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qabstractspinbox.h \
+		F:/Qt/6.8.3/mingw_64/include/QtGui/qvalidator.h \
+		F:/Qt/6.8.3/mingw_64/include/QtCore/qregularexpression.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qslider.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qabstractslider.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qstyle.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qtabbar.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qrubberband.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qframe.h \
+		F:/Qt/6.8.3/mingw_64/include/QtCore/qabstractitemmodel.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/QLabel \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qlabel.h \
+		F:/Qt/6.8.3/mingw_64/include/QtGui/qpicture.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/QMenu \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qmenu.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/QMenuBar \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qmenubar.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/QPushButton \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qpushbutton.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qabstractbutton.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/QStatusBar \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qstatusbar.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/QTextEdit \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qtextedit.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qabstractscrollarea.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/QWidget \
 		../../htmlhighlighter.h \
 		C:/kde/kf6/include/kf6/KSyntaxHighlighting/KSyntaxHighlighting/AbstractHighlighter \
 		../../about.h \
@@ -1609,8 +1663,6 @@ release/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		F:/Qt/6.8.3/mingw_64/include/QtCore/qfiledevice.h \
 		F:/Qt/6.8.3/mingw_64/include/QtCore/QSettings \
 		F:/Qt/6.8.3/mingw_64/include/QtCore/qsettings.h \
-		F:/Qt/6.8.3/mingw_64/include/QtWidgets/QApplication \
-		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qapplication.h \
 		F:/Qt/6.8.3/mingw_64/include/QtGui/QWindow \
 		F:/Qt/6.8.3/mingw_64/include/QtGui/qwindow.h \
 		F:/Qt/6.8.3/mingw_64/include/QtCore/QEvent \
@@ -1811,7 +1863,41 @@ release/settings.o: ../../settings.cpp ../../settings.h \
 		F:/Qt/6.8.3/mingw_64/include/QtGui/qinputmethod.h \
 		F:/Qt/6.8.3/mingw_64/include/QtCore/qlocale.h \
 		F:/Qt/6.8.3/mingw_64/include/QtGui/qguiapplication_platform.h \
-		ui_settings.h
+		ui_settings.h \
+		F:/Qt/6.8.3/mingw_64/include/QtCore/QVariant \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/QApplication \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qapplication.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/QCheckBox \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qcheckbox.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qabstractbutton.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/QComboBox \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qcombobox.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qstyleoption.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qabstractspinbox.h \
+		F:/Qt/6.8.3/mingw_64/include/QtGui/qvalidator.h \
+		F:/Qt/6.8.3/mingw_64/include/QtCore/qregularexpression.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qslider.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qabstractslider.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qstyle.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qtabbar.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qtabwidget.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qrubberband.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qframe.h \
+		F:/Qt/6.8.3/mingw_64/include/QtCore/qabstractitemmodel.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/QGridLayout \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qgridlayout.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qlayout.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qlayoutitem.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qboxlayout.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/QLabel \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qlabel.h \
+		F:/Qt/6.8.3/mingw_64/include/QtGui/qpicture.h \
+		F:/Qt/6.8.3/mingw_64/include/QtGui/qtextdocument.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/QPushButton \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/qpushbutton.h \
+		F:/Qt/6.8.3/mingw_64/include/QtWidgets/QWidget \
+		F:/Qt/6.8.3/mingw_64/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\settings.o ..\..\settings.cpp
 
 release/qrc_res.o: release/qrc_res.cpp 

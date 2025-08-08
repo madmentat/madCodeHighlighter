@@ -182,7 +182,7 @@
      <x>0</x>
      <y>0</y>
      <width>1542</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
@@ -190,13 +190,14 @@
      <string>Файл</string>
     </property>
     <addaction name="separator"/>
-    <addaction name="action_5"/>
+    <addaction name="saveSettings"/>
    </widget>
    <widget class="QMenu" name="menu_2">
     <property name="title">
      <string>Правка</string>
     </property>
     <addaction name="settings"/>
+    <addaction name="themeBar"/>
    </widget>
    <widget class="QMenu" name="menu_3">
     <property name="title">
@@ -219,9 +220,14 @@
     <string>О программе</string>
    </property>
   </action>
-  <action name="action_5">
+  <action name="saveSettings">
    <property name="text">
     <string>Сохранить настройки</string>
+   </property>
+  </action>
+  <action name="themeBar">
+   <property name="text">
+    <string>Темная тема</string>
    </property>
   </action>
  </widget>

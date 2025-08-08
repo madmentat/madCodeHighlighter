@@ -8,7 +8,7 @@
 #include <QSettings>
 #include <QApplication>
 #include <QAction>
-#include <QTimer>
+
 
 #ifdef Q_OS_WIN
 #include <QWindow>
@@ -69,10 +69,12 @@ MainWindow::MainWindow(QWidget *parent)
     }
     ui->comboBoxLanguage->setCurrentText("C++");
 
+    /*
     // Add toggle theme action to menu
     QAction *toggleThemeAction = new QAction("Переключить тему", this);
-    ui->menubar->addAction(toggleThemeAction); // Assumes menuBar exists in UI
-
+    */
+    //ui->themeBar->addAction(toggleThemeAction); // Assumes menuBar exists in UI
+    //Settings *settings = new Settings(this);
     connect(ui->codeInput, &QTextEdit::textChanged, this, &MainWindow::onCodeChanged);
     connect(ui->comboBoxFontScale, &QComboBox::currentTextChanged, this, &MainWindow::on_comboBoxFontScale_currentTextChanged);
     connect(ui->comboBoxLineSpacing, &QComboBox::currentTextChanged, this, &MainWindow::on_comboBoxLineSpacing_currentTextChanged);
@@ -80,15 +82,21 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->comboBoxLanguage, &QComboBox::currentTextChanged, this, &MainWindow::on_comboBoxLanguage_currentTextChanged);
     connect(ui->saveSettingsButton, &QPushButton::clicked, this, &MainWindow::on_saveSettingsButton_clicked);
     connect(ui->AboutCHL, &QAction::triggered, this, &MainWindow::on_AboutCHL_triggered);
-    connect(toggleThemeAction, &QAction::triggered, this, &MainWindow::toggleTheme);
+    connect(ui->themeBar, &QAction::triggered, this, &MainWindow::on_themeBar_toggled);
+    //connect(ui->themeBar, &QAction::triggered, this, &MainWindow::on_themeBar_toggled);
+    // Соединяем сигнал из Settings со слотом MainWindow
+    connect(m_settings, &Settings::saveSettingsSignal, this, &MainWindow::saveSettings);
+    connect(m_settings, &Settings::themeBoxSignal, this, &MainWindow::setDarkTheme);
+    connect(m_settings, &Settings::autosaveChanged,this, &MainWindow::setAutosaveEnabled);
+    //connect(m_settings, &Settings::themeBoxSignal,this, &MainWindow::toggleTheme);
+
 
     loadSettings();
+    applyTheme();
 
-    // Delay applyTheme until window is fully initialized
-    QTimer::singleShot(0, this, [this]() {
-        qDebug() << "Отложенное применение темы...";
-        applyTheme();
-    });
+
+    (void)winId();            // гарантирует создание HWND
+    updateTitleBarTheme();    // теперь hwnd точно не null
 
     qDebug() << "Вызов onCodeChanged()...";
     onCodeChanged();
@@ -109,7 +117,7 @@ void MainWindow::onCodeChanged()
 {
     qDebug() << "onCodeChanged вызван";
     const QString code = ui->codeInput->toPlainText();
-    QSignalBlocker blocker(ui->codeViewer);
+    QSignalBlocker blocker(ui->codeViewer); // Block signals to prevent recursion
     ui->codeViewer->setPlainText(code);
 
     HtmlHighlighter htmlExporter;
@@ -139,6 +147,7 @@ void MainWindow::on_comboBoxFontScale_currentTextChanged(const QString &arg1)
     QSignalBlocker blocker(ui->HTMLout);
     ui->HTMLout->setFont(font);
     onCodeChanged();
+    maybeSave();                 // <-- добавь
 }
 
 void MainWindow::on_comboBoxLineSpacing_currentTextChanged(const QString &arg1)
@@ -147,6 +156,7 @@ void MainWindow::on_comboBoxLineSpacing_currentTextChanged(const QString &arg1)
     QSignalBlocker blocker(ui->HTMLout);
     ui->HTMLout->setStyleSheet(QString("QTextEdit { line-height: %1; }").arg(arg1));
     onCodeChanged();
+    maybeSave();                 // <-- добавь
 }
 
 void MainWindow::on_comboBoxTheme_currentTextChanged(const QString &arg1)
@@ -161,6 +171,7 @@ void MainWindow::on_comboBoxTheme_currentTextChanged(const QString &arg1)
         highlighter->setTheme(theme);
     }
     onCodeChanged();
+    maybeSave();                 // <-- добавь
 }
 
 void MainWindow::on_comboBoxLanguage_currentTextChanged(const QString &arg1)
@@ -181,36 +192,40 @@ void MainWindow::on_comboBoxLanguage_currentTextChanged(const QString &arg1)
         highlighter->setDefinition(definition);
     }
     onCodeChanged();
+    maybeSave();                 // <-- добавь
 }
 
 void MainWindow::saveSettings()
 {
-    QSettings settings("madmentat", "SyntaxHighlighter");
+    qDebug() << "Жопа!" << GetLastError();
 
-    settings.setValue("fontSize", ui->comboBoxFontScale->currentText());
-    settings.setValue("lineSpacing", ui->comboBoxLineSpacing->currentText());
-    settings.setValue("theme", ui->comboBoxTheme->currentText());
-    settings.setValue("language", ui->comboBoxLanguage->currentText());
-    settings.setValue("isDarkTheme", isDarkTheme);
-
+    QSettings cfg("madmentat", "SyntaxHighlighter");
+    cfg.setValue("fontSize", ui->comboBoxFontScale->currentText());
+    cfg.setValue("lineSpacing", ui->comboBoxLineSpacing->currentText());
+    cfg.setValue("theme", ui->comboBoxTheme->currentText());
+    cfg.setValue("language", ui->comboBoxLanguage->currentText());
+    cfg.setValue("isDarkTheme", isDarkTheme);
+    cfg.setValue("autoSave", m_autoSave); // <-- добавь
     qDebug() << "Настройки сохранены.";
 }
 
 void MainWindow::loadSettings()
 {
     qDebug() << "Загрузка настроек...";
-    QSettings settings("madmentat", "SyntaxHighlighter");
+
+    QSettings cfg("madmentat", "SyntaxHighlighter"); // <-- СНАЧАЛА cfg
+    m_autoSave = cfg.value("autoSave", false).toBool(); // <-- читаем флаг отсюда
 
     QSignalBlocker fontBlocker(ui->comboBoxFontScale);
-    ui->comboBoxFontScale->setCurrentText(settings.value("fontSize", "14").toString());
+    ui->comboBoxFontScale->setCurrentText(cfg.value("fontSize", "14").toString());
 
     QSignalBlocker spacingBlocker(ui->comboBoxLineSpacing);
-    ui->comboBoxLineSpacing->setCurrentText(settings.value("lineSpacing", "1.4").toString());
+    ui->comboBoxLineSpacing->setCurrentText(cfg.value("lineSpacing", "1.4").toString());
 
     QSignalBlocker themeBlocker(ui->comboBoxTheme);
-    ui->comboBoxTheme->setCurrentText(settings.value("theme", "Breeze Light").toString());
+    ui->comboBoxTheme->setCurrentText(cfg.value("theme", "Breeze Light").toString());
 
-    QString language = settings.value("language", "C++").toString();
+    QString language = cfg.value("language", "C++").toString();
     QSignalBlocker langBlocker(ui->comboBoxLanguage);
     if (repo->definitionForName(language).isValid()) {
         ui->comboBoxLanguage->setCurrentText(language);
@@ -218,8 +233,10 @@ void MainWindow::loadSettings()
         qDebug() << "Saved language" << language << "is invalid, falling back to C++";
         ui->comboBoxLanguage->setCurrentText("C++");
     }
-    isDarkTheme = settings.value("isDarkTheme", false).toBool();
+
+    isDarkTheme = cfg.value("isDarkTheme", false).toBool();
 }
+
 
 void MainWindow::about()
 {
@@ -236,6 +253,8 @@ void MainWindow::settings()
     if (!m_settings)
         m_settings = new Settings(this);
 
+    m_settings->setCurrentTheme(isDarkTheme);
+    m_settings->setAutosave(m_autoSave);     // <-- ВАЖНО
     m_settings->show();
     m_settings->raise();
     m_settings->activateWindow();
@@ -335,6 +354,7 @@ void MainWindow::applyTheme()
     )";
 
     qApp->setStyleSheet(isDarkTheme ? darkTheme : lightTheme);
+    ui->themeBar->setText(isDarkTheme ? "Светлая тема" : "Темная тема");
     updateTitleBarTheme();
 }
 
@@ -344,8 +364,6 @@ void MainWindow::updateTitleBarTheme()
     qDebug() << "Обновление темы заголовка окна...";
     if (!windowHandle()) {
         qDebug() << "Ошибка: windowHandle недоступен!";
-        // Retry after a short delay
-        QTimer::singleShot(100, this, &MainWindow::updateTitleBarTheme);
         return;
     }
     HWND hwnd = reinterpret_cast<HWND>(windowHandle()->winId());
@@ -378,10 +396,46 @@ void MainWindow::updateTitleBarTheme()
     BOOL setPosResult = SetWindowPos(hwnd, nullptr, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
     if (!setPosResult) {
         qDebug() << "SetWindowPos failed, error:" << GetLastError();
-    } else {
-        qDebug() << "Окно успешно перерисовано";
     }
 #else
     qDebug() << "Title bar theme switching is only supported on Windows.";
 #endif
 }
+
+void MainWindow::on_themeBar_toggled(bool)
+{
+    toggleTheme();
+}
+
+void MainWindow::setDarkTheme(bool dark)
+{
+    if (isDarkTheme == dark)
+        return; // уже установлено
+
+    isDarkTheme = dark;
+    applyTheme();
+    saveSettings();
+}
+
+void MainWindow::setAutosaveEnabled(bool en)
+{
+    if (m_autoSave == en) return;
+    m_autoSave = en;
+    // можно сразу сохранить сам флаг
+    saveSettings();
+}
+
+void MainWindow::maybeSave()
+{
+    if (m_autoSave)
+        saveSettings();
+}
+
+
+void MainWindow::on_saveSettings_triggered()
+{
+    saveSettings();
+    qDebug() << "Хуй!" << GetLastError();
+
+}
+
